@@ -1,0 +1,540 @@
+/* ==========================================================================
+   HORN OK PLEASE — Stage 1: Static Visual Interface
+   Token system
+   ========================================================================== */
+
+:root{
+  /* -- Colour: dusk highway sky + truck-art accents -- */
+  --sky-deep:     #221129;
+  --sky-plum:     #5a2846;
+  --sky-rose:     #9a4a45;
+  --sky-amber:    #e2823f;
+  --sky-gold:     #f2b64d;
+
+  --truck-teal:      #2f6f63;
+  --truck-teal-dark: #1c4038;
+  --vermilion:       #c8452f;
+  --vermilion-dark:  #8f2f20;
+  --marigold:        #f2a93b;
+
+  --cream:      #f5ecd9;
+  --cream-dim:  rgba(245, 236, 217, 0.68);
+  --cream-faint:rgba(245, 236, 217, 0.4);
+  --ink:        #140d0c;
+
+  --glass-bg:     rgba(18, 12, 12, 0.42);
+  --glass-border: rgba(245, 236, 217, 0.14);
+
+  /* -- Type -- */
+  --font-display: 'Yatra One', cursive;
+  --font-serif:   'Fraunces', serif;
+  --font-ui:      'Work Sans', sans-serif;
+
+  /* -- Rhythm -- */
+  --radius-lg: 28px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+  --ease: cubic-bezier(.4,0,.2,1);
+}
+
+*, *::before, *::after{ box-sizing: border-box; }
+
+html, body{
+  height: 100%;
+  margin: 0;
+  overflow: hidden; /* single-screen experience, no scrolling */
+}
+
+body{
+  font-family: var(--font-ui);
+  color: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img{ max-width: 100%; display: block; }
+button{ font-family: inherit; }
+
+::selection{ background: var(--marigold); color: var(--ink); }
+
+/* =========================================================
+   FIXED BACKGROUND IMAGE
+========================================================= */
+
+.scene {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.scene__background {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center center;
+
+    display: block;
+}
+
+.scene__overlay {
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(10, 5, 15, 0.08),
+            rgba(10, 5, 15, 0.20)
+        );
+
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   STAGE — foreground content
+   ========================================================================== */
+
+.stage{
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 28px clamp(20px, 4vw, 56px);
+}
+
+/* -- top bar -- */
+.topbar{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  animation: fadeDown .7s var(--ease) .1s forwards;
+}
+
+.topbar__status{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--cream-dim);
+}
+
+.topbar__dot{
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #6fcf97;
+  box-shadow: 0 0 8px 1px rgba(111, 207, 151, 0.7);
+}
+
+.topbar__brand{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.topbar__source{
+  color: var(--cream-dim);
+}
+
+.topbar__support{
+  color: var(--ink);
+  background: var(--cream);
+  padding: 7px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 12.5px;
+  transition: transform .2s var(--ease), background .2s var(--ease);
+}
+.topbar__support:hover{
+  background: var(--marigold);
+  transform: translateY(-1px);
+}
+
+/* -- hero column -- */
+.hero{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: clamp(10px, 1.6vh, 18px);
+  min-height: 0;
+}
+
+.hero__title{
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.02;
+  font-size: clamp(52px, 9vw, 118px);
+  color: var(--cream);
+  text-shadow:
+    0 2px 0 rgba(200, 69, 47, 0.35),
+    0 14px 40px rgba(0,0,0,0.45);
+  opacity: 0;
+  animation: fadeUp .8s var(--ease) .25s forwards;
+}
+.hero__title-line{ display: block; }
+
+.hero__tagline{
+  margin: 0;
+  max-width: 66ch;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(14px, 1.6vw, 18px);
+  color: var(--sky-gold);
+  letter-spacing: 0.01em;
+  opacity: 0;
+  animation: fadeUp .8s var(--ease) .45s forwards;
+}
+
+.hero__hint{
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--cream-faint);
+  opacity: 0;
+  animation: fadeUp .8s var(--ease) .9s forwards;
+}
+
+/* ==========================================================================
+   PLAYER — the "truck signboard" card. The one signature element.
+   ========================================================================== */
+
+.player{
+  position: relative;
+  margin-top: clamp(10px, 2vh, 22px);
+  width: min(92vw, 560px);
+  padding: 22px clamp(18px, 3vw, 30px) 18px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(155deg, var(--truck-teal) 0%, var(--truck-teal-dark) 100%);
+  border: 3px solid var(--vermilion);
+  box-shadow:
+    0 0 0 6px rgba(200, 69, 47, 0.18),
+    0 24px 60px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(245,236,217,0.12);
+  opacity: 0;
+  transform: translateY(14px) scale(0.985);
+  animation: playerIn .8s var(--ease) .55s forwards;
+}
+
+.player__badge{
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--vermilion);
+  color: var(--cream);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 2px solid var(--cream);
+  white-space: nowrap;
+}
+.player__badge em{
+  font-style: normal;
+  color: var(--marigold);
+}
+
+.player__body{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+}
+
+.player__thumb{
+  flex: 0 0 auto;
+  width: clamp(76px, 12vw, 96px);
+  height: clamp(76px, 12vw, 96px);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1.5px solid rgba(245,236,217,0.35);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+.player__thumb:hover{
+  transform: scale(1.035) rotate(-1deg);
+  box-shadow: 0 12px 26px rgba(0,0,0,0.45);
+}
+.player__thumb img{ width: 100%; height: 100%; object-fit: cover; }
+
+.player__meta{
+  flex: 1;
+  min-width: 0;
+}
+
+.player__title{
+  margin: 0 0 2px;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(16px, 2.4vw, 19px);
+  color: var(--cream);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player__artist{
+  margin: 0 0 12px;
+  font-family: var(--font-ui);
+  font-size: 12.5px;
+  color: var(--cream-dim);
+  letter-spacing: 0.02em;
+}
+
+/* -- controls -- */
+.player__controls{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ctrl{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--cream);
+  cursor: pointer;
+  padding: 0;
+  transition: transform .15s var(--ease), color .15s var(--ease), opacity .15s var(--ease);
+}
+
+.ctrl--prev, .ctrl--next{
+  width: 34px;
+  height: 34px;
+  opacity: 0.85;
+}
+.ctrl--prev svg, .ctrl--next svg{ width: 20px; height: 20px; }
+
+.ctrl--prev:hover, .ctrl--next:hover{
+  opacity: 1;
+  color: var(--marigold);
+  transform: translateY(-1px);
+}
+.ctrl--prev:active, .ctrl--next:active{ transform: scale(0.9); }
+
+.ctrl--play{
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--marigold);
+  color: var(--ink);
+  box-shadow: 0 6px 18px rgba(242, 169, 59, 0.45);
+}
+.ctrl--play svg{ width: 20px; height: 20px; }
+.ctrl--play svg[hidden]{ display: none; }
+.ctrl--play .icon-play{ margin-left: 2px; }
+
+.ctrl--play:hover{
+  transform: translateY(-1px) scale(1.04);
+  box-shadow: 0 8px 22px rgba(242, 169, 59, 0.6);
+}
+.ctrl--play:active{ transform: scale(0.94); }
+
+.ctrl:focus-visible{
+  outline: 2px solid var(--cream);
+  outline-offset: 3px;
+  border-radius: 50%;
+}
+
+/* -- progress -- */
+.player__progress{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.player__time{
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--cream-dim);
+  font-variant-numeric: tabular-nums;
+  flex: 0 0 auto;
+  min-width: 30px;
+}
+.player__time--duration{ text-align: right; }
+
+.progress{ flex: 1; }
+
+.progress__track{
+  position: relative;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(245, 236, 217, 0.22);
+  overflow: visible;
+}
+
+.progress__fill{
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--marigold), var(--sky-amber));
+  transition: width .2s var(--ease);
+}
+
+.progress__handle{
+  position: absolute;
+  top: 50%;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--cream);
+  border: 2px solid var(--vermilion);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+/* ==========================================================================
+   PLAYBACK ENGINE — hidden YouTube embed + dynamic playback states
+   ========================================================================== */
+
+/* The YouTube IFrame needs a real, rendered element to attach to, so this
+   is visually hidden rather than display:none, and sits outside the
+   visible composition entirely. */
+.yt-embed{
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  left: -9999px;
+  top: -9999px;
+}
+
+/* Larger invisible hit area for the progress bar on touch devices,
+   without changing how the bar looks. */
+.progress__track{
+  cursor: pointer;
+}
+.progress__track::before{
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  height: 28px;
+  transform: translateY(-50%);
+}
+
+/* Subtle buffering feedback on the play button — no spinner, no visualizer. */
+.player.is-buffering .ctrl--play{
+  animation: bufferPulse 1s ease-in-out infinite;
+}
+
+@keyframes bufferPulse{
+  0%, 100%{ opacity: 1; }
+  50%{ opacity: 0.55; }
+}
+
+/* Inline status/error line — hidden until there's something to say. */
+.player__status{
+  margin: 10px 0 0;
+  font-family: var(--font-ui);
+  font-size: 11.5px;
+  color: var(--cream-dim);
+  text-align: center;
+  min-height: 0;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity .25s var(--ease), max-height .25s var(--ease);
+}
+.player__status.is-visible{
+  opacity: 1;
+  max-height: 20px;
+  margin-top: 10px;
+}
+.player__status.is-error{
+  color: var(--marigold);
+}
+
+/* ==========================================================================
+   MOTION
+   ========================================================================== */
+
+@keyframes fadeDown{
+  from{ opacity: 0; transform: translateY(-8px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeUp{
+  from{ opacity: 0; transform: translateY(12px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+@keyframes playerIn{
+  from{ opacity: 0; transform: translateY(14px) scale(0.985); }
+  to{ opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 720px){
+  html, body{ overflow-y: auto; }
+  .stage{ height: auto; min-height: 100dvh; padding: 20px 16px 32px; }
+  .hero{ padding-top: 6vh; gap: 14px; }
+  .hero__title{ font-size: clamp(44px, 13vw, 64px); }
+  .player{ width: 100%; }
+  .player__body{ gap: 12px; }
+  .player__thumb{ width: 68px; height: 68px; }
+}
+
+@media (max-width: 420px){
+  .player__title{ font-size: 15px; }
+  .player__controls{ gap: 10px; }
+  .ctrl--play{ width: 44px; height: 44px; }
+}
+
+@media (min-width: 1600px){
+  .player{ width: 620px; }
+}
+
+
+/* =========================================================
+   PLAY / PAUSE ICON FIX
+========================================================= */
+
+#btnPlay .icon-play {
+    display: block;
+}
+
+#btnPlay .icon-pause {
+    display: none;
+}
+
+#btnPlay[aria-pressed="true"] .icon-play {
+    display: none;
+}
+
+#btnPlay[aria-pressed="true"] .icon-pause {
+    display: block;
+}
