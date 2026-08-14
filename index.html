@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>हॉर्न ओके प्लीज़ — Songs from the Highway</title>
+
+  <meta
+    name="description"
+    content="Songs that play in Indian trucks. Night highway. Dhaba chai. Full volume."
+  >
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- =========================================================
+     FIXED BACKGROUND IMAGE
+     This NEVER changes with the song.
+========================================================== -->
+
+<div class="scene" aria-hidden="true">
+    <img 
+        class="scene__background"
+        src="images\bgimage.png"
+        alt=""
+    />
+
+    <div class="scene__overlay"></div>
+</div>
+
+
+  <!-- =========================================================
+       MAIN EXPERIENCE
+  ========================================================== -->
+
+  <div class="stage">
+
+    <!-- TOP BAR -->
+
+    <header class="topbar">
+
+      <div class="topbar__status">
+        <span
+          class="topbar__dot"
+          aria-hidden="true"
+        ></span>
+
+        <span
+          class="topbar__time"
+          id="clockTime"
+        >
+          11:03 am
+        </span>
+      </div>
+
+
+      <div class="topbar__brand">
+
+        <!-- YouTube branding removed -->
+        <span class="topbar__source">
+          TRUCK MUSIC
+        </span>
+
+        <a
+          class="topbar__support"
+          href=" https://thatkunaal.github.io/Personal-Portfolio-/"
+          onclick="return true;"
+        >
+          Support&nbsp;me
+        </a>
+
+      </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         HERO
+    ========================================================== -->
+
+    <main class="hero">
+
+      <h1 class="hero__title">
+
+        <span class="hero__title-line">
+          हॉर्न ओके
+        </span>
+
+        <span class="hero__title-line">
+          प्लीज़
+        </span>
+
+      </h1>
+
+
+      <p class="hero__tagline">
+        Songs that play in Indian trucks. Night highway. Dhaba chai. Full volume.
+      </p>
+
+
+      <!-- =====================================================
+           PLAYER
+      ====================================================== -->
+
+      <section
+        class="player"
+        aria-label="Now playing"
+      >
+
+        <div
+          class="player__badge"
+          aria-hidden="true"
+        >
+          HORN <em>OK</em> PLEASE
+        </div>
+
+
+        <div class="player__body">
+
+          <!-- THUMBNAIL -->
+
+          <div class="player__thumb">
+
+            <img
+              src="images/thumbnail-placeholder.svg"
+              alt="Album art for Song 01"
+              id="songThumb"
+            >
+
+          </div>
+
+
+          <!-- SONG INFORMATION -->
+
+          <div class="player__meta">
+
+            <p
+              class="player__title"
+              id="songTitle"
+            >
+              Song 01
+            </p>
+
+            <p
+              class="player__artist"
+              id="songArtist"
+            >
+              Unknown Artist
+            </p>
+
+
+            <!-- =================================================
+                 ONLY 3 MUSIC CONTROLS
+            ================================================== -->
+
+            <div
+              class="player__controls"
+              role="group"
+              aria-label="Playback controls"
+            >
+
+              <!-- PREVIOUS -->
+
+              <button
+                class="ctrl ctrl--prev"
+                type="button"
+                aria-label="Previous song"
+                id="btnPrev"
+              >
+
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+
+                  <path
+                    d="M6 6v12M18 6v12L8 12l10-6Z"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linejoin="round"
+                    stroke-linecap="round"
+                  />
+
+                </svg>
+
+              </button>
+
+
+              <!-- PLAY / PAUSE -->
+
+              <button
+                class="ctrl ctrl--play"
+                type="button"
+                aria-label="Play"
+                id="btnPlay"
+                aria-pressed="false"
+              >
+
+                <!-- PLAY ICON -->
+
+                <svg
+                  class="icon-play"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+
+                  <path
+                    d="M8 5.5v13l11-6.5-11-6.5Z"
+                    fill="currentColor"
+                  />
+
+                </svg>
+
+
+                <!-- PAUSE ICON -->
+
+                <svg
+                  class="icon-pause"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  hidden
+                >
+
+                  <rect
+                    x="6.5"
+                    y="5"
+                    width="4"
+                    height="14"
+                    rx="1"
+                    fill="currentColor"
+                  />
+
+                  <rect
+                    x="13.5"
+                    y="5"
+                    width="4"
+                    height="14"
+                    rx="1"
+                    fill="currentColor"
+                  />
+
+                </svg>
+
+              </button>
+
+
+              <!-- NEXT -->
+
+              <button
+                class="ctrl ctrl--next"
+                type="button"
+                aria-label="Next song"
+                id="btnNext"
+              >
+
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+
+                  <path
+                    d="M18 6v12M6 6v12l10-6L6 6Z"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linejoin="round"
+                    stroke-linecap="round"
+                  />
+
+                </svg>
+
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             PROGRESS BAR
+        ====================================================== -->
+
+        <div class="player__progress">
+
+          <span
+            class="player__time player__time--current"
+            id="timeCurrent"
+          >
+            0:00
+          </span>
+
+
+          <div
+            class="progress"
+            role="presentation"
+          >
+
+            <div
+              class="progress__track"
+              id="progressTrack"
+            >
+
+              <div
+                class="progress__fill"
+                id="progressFill"
+                style="width: 0%;"
+              ></div>
+
+              <div
+                class="progress__handle"
+                id="progressHandle"
+                style="left: 0%;"
+              ></div>
+
+            </div>
+
+          </div>
+
+
+          <span
+            class="player__time player__time--duration"
+            id="timeDuration"
+          >
+            0:00
+          </span>
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <p
+          class="player__status"
+          id="playerStatus"
+          role="status"
+          aria-live="polite"
+        ></p>
+
+      </section>
+
+
+      <p class="hero__hint">
+        बुरी नज़र वाले तेरा मुँह काला
+      </p>
+
+    </main>
+
+  </div>
+
+
+  <!-- =========================================================
+       NATIVE HTML5 AUDIO ENGINE
+       NO YOUTUBE
+  ========================================================== -->
+
+  <audio
+    id="audioPlayer"
+    preload="metadata"
+  ></audio>
+
+
+  <!-- =========================================================
+       JAVASCRIPT
+  ========================================================== -->
+
+  <script src="js/songs.js"></script>
+  <script src="js/script.js"></script>
+
+</body>
+</html>
